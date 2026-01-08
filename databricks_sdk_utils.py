@@ -12,20 +12,32 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABRICKS_HOST = os.environ.get("DATABRICKS_HOST")
-DATABRICKS_TOKEN = os.environ.get("DATABRICKS_TOKEN")
 DATABRICKS_SQL_WAREHOUSE_ID = os.environ.get("DATABRICKS_SQL_WAREHOUSE_ID")
 
-if not DATABRICKS_HOST or not DATABRICKS_TOKEN:
+# Auth: PAT (legacy) or OAuth M2M (recommended)
+DATABRICKS_TOKEN = os.environ.get("DATABRICKS_TOKEN")
+DATABRICKS_CLIENT_ID = os.environ.get("DATABRICKS_CLIENT_ID")
+DATABRICKS_CLIENT_SECRET = os.environ.get("DATABRICKS_CLIENT_SECRET")
+
+if not DATABRICKS_HOST:
     raise ImportError(
-        "DATABRICKS_HOST and DATABRICKS_TOKEN must be set in environment variables or .env file "
-        "for databricks_sdk_utils to initialize."
+        "DATABRICKS_HOST must be set in environment variables or .env file."
+    )
+
+has_pat = bool(DATABRICKS_TOKEN)
+has_oauth = bool(DATABRICKS_CLIENT_ID and DATABRICKS_CLIENT_SECRET)
+
+if not has_pat and not has_oauth:
+    raise ImportError(
+        "Authentication required. Set either:\n"
+        "  - DATABRICKS_TOKEN (legacy PAT auth), or\n"
+        "  - DATABRICKS_CLIENT_ID and DATABRICKS_CLIENT_SECRET (OAuth M2M, recommended)"
     )
 
 # Configure and initialize the global SDK client
-# Using short timeouts as previously determined to be effective
+# SDK unified auth auto-detects credentials from environment variables
 sdk_config = Config(
     host=DATABRICKS_HOST,
-    token=DATABRICKS_TOKEN,
     http_timeout_seconds=30,
     retry_timeout_seconds=60
 )
