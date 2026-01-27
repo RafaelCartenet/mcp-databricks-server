@@ -1,5 +1,4 @@
 httpx>=0.28.1
-python-dotenv>=1.0.0 
-mcp[cli]>=1.2.0
-asyncio>=3.4.3
-databricks-sdk==0.55.0
+python-dotenv>=1.2.1 
+mcp[cli]>=1.25.0
+databricks-sdk==0.77.0
