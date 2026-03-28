@@ -1,3 +1,6 @@
+[![Listed on Spark](https://spark.entire.vc/badges/listed.svg)](https://spark.entire.vc/assets/vb-databricks-smart-sql?utm_source=github&utm_medium=readme)
+[![Install via Spark](https://spark.entire.vc/badges/vb-databricks-smart-sql/install.svg)](https://spark.entire.vc/assets/vb-databricks-smart-sql?utm_source=github&utm_medium=readme)
+
 # Databricks MCP Server
 
 - [Motivation](#motivation)
